@@ -6,8 +6,14 @@ import "dotenv/config";
 // is not required when starting the application
 import "../database/checkConnection";
 
+import type { RequestHandler } from "express";
 // Import the Express application from ./app
 import app from "./app";
+const sayWelcome: RequestHandler = (req, res) => {
+  res.send("Welcome to Wild Series !");
+};
+
+app.get("/", sayWelcome);
 
 // Get the port from the environment variables
 const port = process.env.APP_PORT;

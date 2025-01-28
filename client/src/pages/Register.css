@@ -1,0 +1,53 @@
+.register-container {
+  margin-top: 70px;
+  padding: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.register-form div {
+  margin-bottom: 15px;
+}
+
+.register-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.register-form input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.register-form button {
+  width: 105%;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.register-form button:hover {
+  background-color: #555;
+}
+
+.password-indicator {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.9em;
+}
+
+.password-indicator.valid {
+  color: green;
+}
+
+.password-indicator.invalid {
+  color: red;
+}

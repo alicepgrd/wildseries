@@ -1,0 +1,46 @@
+.program-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  margin-top: 70px;
+  justify-content: center;
+}
+
+.program-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.program-card:hover {
+  transform: translateY(-5px);
+}
+
+.program-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.program-card h2 {
+  font-size: 1.5em;
+  margin: 15px 10px;
+  color: #333;
+}
+
+.program-card p {
+  font-size: 1em;
+  margin: 0 10px 15px;
+  color: #666;
+}
+
+.program-card .info {
+  font-size: 0.9em;
+  margin: 0 10px 15px;
+  color: #888;
+}

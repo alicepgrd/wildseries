@@ -1,4 +1,3 @@
-// Some data to make the trick
 import type { RequestHandler } from "express";
 
 const programs = [
@@ -45,4 +44,91 @@ const read: RequestHandler = (req, res) => {
   }
 };
 
-export default { browse, read };
+const edit: RequestHandler = async (req, res, next) => {
+  try {
+    const program = {
+      id: Number(req.params.id),
+      title: req.body.title,
+      synopsis: req.body.synopsis,
+      poster: req.body.poster,
+      country: req.body.country,
+      year: req.body.year,
+      category_id: req.body.category_id,
+    };
+
+    const affectedRows = await programRepository.update(program);
+
+    if (affectedRows === 0) {
+      res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+const add: RequestHandler = async (req, res, next) => {
+  try {
+    const newProgram = {
+      title: req.body.title,
+      synopsis: req.body.synopsis,
+      poster: req.body.poster,
+      country: req.body.country,
+      year: req.body.year,
+      category_id: req.body.category_id,
+    };
+
+    const insertId = await programRepository.create(newProgram);
+
+    res.status(201).json({ insertId });
+  } catch (err) {
+    next(err);
+  }
+};
+const destroy: RequestHandler = async (req, res, next) => {
+  try {
+    // Delete a specific category based on the provided ID
+    const programId = Number(req.params.id);
+
+    await programRepository.delete(programId);
+
+    // Respond with HTTP 204 (No Content) anyway
+    res.sendStatus(204);
+  } catch (err) {
+    // Pass any errors to the error-handling middleware
+    next(err);
+  }
+};
+
+const validate: RequestHandler = (req, res, next) => {
+  type ValidationError = {
+    field: string;
+    message: string;
+  };
+
+  const errors: ValidationError[] = [];
+  const { title, synopsis, poster, country, year, category_id } = req.body;
+
+  if (!title) errors.push({ field: "title", message: "The title is required" });
+  if (!synopsis)
+    errors.push({ field: "synopsis", message: "The synopsis is required" });
+  if (!poster)
+    errors.push({ field: "poster", message: "The poster URL is required" });
+  if (!country)
+    errors.push({ field: "country", message: "The country is required" });
+  if (!year || Number.isNaN(year))
+    errors.push({ field: "year", message: "The year must be a valid number" });
+  if (!category_id || Number.isNaN(category_id))
+    errors.push({
+      field: "category_id",
+      message: "The category_id must be a valid number",
+    });
+  if (errors.length > 0) {
+    res.status(400).json({ validationErrors: errors });
+  } else {
+    next();
+  }
+};
+
+export default { browse, read, edit, add, destroy, validate };

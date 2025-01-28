@@ -7,7 +7,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Import the main app component
 import App from "./App";
-import ProgramsPage from "./pages/programs";
+import Login from "./pages/Login";
+import ProgramDetails from "./pages/ProgramDetails";
+import ProgramEdit from "./pages/ProgramEdit";
+import ProgramIndex from "./pages/ProgramIndex";
+import ProgramNew from "./pages/ProgramNew";
+import Register from "./pages/Register";
 
 // Import additional components for new routes
 // Try creating these components in the "pages" folder
@@ -23,11 +28,35 @@ const router = createBrowserRouter([
   {
     path: "/", // The root path
     element: <App />, // Renders the App component for the home page
+    children: [
+      {
+        path: "/programs",
+        element: <ProgramIndex />,
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/api/programs`),
+      },
+      {
+        path: "/programs/new",
+        element: <ProgramNew />,
+      },
+      {
+        path: "/programs/:id",
+        element: <ProgramDetails />,
+      },
+      {
+        path: "/programs/:id/edit",
+        element: <ProgramEdit />,
+      },
+      {
+        path: "/login", // Ajoutez cette nouvelle route
+        element: <Login />,
+      },
+      {
+        path: "/Register", // Ajoutez cette nouvelle route
+        element: <Register />,
+      },
+    ],
   },
-  {
-    path: "/programs", // Ajoutez cette nouvelle route
-    element: <ProgramsPage />,
-  },
+
   // Try adding a new route! For example, "/about" with an About component
 ]);
 
